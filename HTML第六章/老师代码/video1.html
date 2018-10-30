@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+	</head>
+	<body>
+		
+		<video src="video/Intermission-Walk-in_512kb.mp4" controls="controls" id="video" width="240" height="320">
+			
+		</video>
+		
+		<script>
+			window.onload = function(){
+				var oVideo = document.getElementById("video")
+//				console.log(oVideo.duration)
+				oVideo.poster = "img/1.jpg"
+				oVideo.videoWidth = 240+"px"
+				oVideo.videoHeight = 320+"px"
+				oVideo.addEventListener("canplay",function(){
+					console.log(oVideo.muted)
+					
+//					oVideo.ontimeupdate = function(){
+//						console.log(this.currentTime)
+//					}
+					
+					
+				})
+				
+			}
+			
+		</script>
+		
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			.box{
+				width: 200px;
+				height: 200px;
+				background: red;
+			}
+			.progress{
+				position: relative;
+				width: 200px;
+				height: 20px;
+				background: #ddd;
+				top: 10px;
+			}
+			.info{
+				position: absolute;
+				left: 0;
+				top: 0;
+				width:0px;
+				height: 20px;
+				background: chocolate;
+			}
+			.detail{
+				position: absolute;
+				top: 60px;
+			}
+		</style>
+	</head>
+	<body style="margin: 200px;">
+		<div id="box" class="box"></div>
+		<ul></ul>
+		<div class="progress" id="progress">
+				<div class="info" id="info"></div>
+			</div>
+			<div class="detail" id="detail">
+			
+			</div>
+		<script>
+
+			var oBox = document.getElementById("box")
+			var oUl = document.getElementsByTagName("ul")[0]
+			var oFile = document.getElementById("file")
+			var oInfo = document.getElementById("info")
+			var oDetail = document.getElementById("detail")
+			oBox.ondragenter = function(){
+				this.innerHTML = "将文件放进来"
+			}
+			oBox.ondragover = function(e){
+				e.preventDefault()
+			}
+			oBox.ondragleave = function(e){
+				this.innerHTML = ""
+				
+			}
+			oBox.ondrop = function(e){
+				e.preventDefault()
+				var fs = e.dataTransfer.files
+				for (var i=0;i<fs.length;i++) {
+					var fd = new FileReader()
+					fd.readAsDataURL(fs[i])
+					fd.onload = function(){
+						alert("成功")
+					}
+					fd.onprogress = function(e){
+						oDetail.innerHTML = Math.round(e.loaded/e.total*200)*0.5+"%"
+						oInfo.style.width = (e.loaded/e.total*200)+"px"
+					}
+				}
+				
+			}
+			
+		</script>
+	</body>
+</html>

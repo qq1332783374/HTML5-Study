@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>datatransfer中的setData()和getData()</title>
+		<style>
+			.drag{
+				width: 100px;
+				height: 100px;
+				border: 1px solid black;
+				margin-bottom: 100px;
+			}
+			
+			.result{
+				width: 200px;
+				height: 200px;
+				background: red;
+			}
+		</style>
+	</head>
+	<body style="margin: 100px;">
+		<div class="drag" draggable="true">
+			
+		</div>
+		
+		<div class="result">
+			
+		</div>
+		
+		
+		
+		<script>
+			var oDrag = document.getElementsByTagName("div")[0]
+			var oRes = document.getElementsByTagName("div")[1]
+			
+			oDrag.ondragstart = function(e){
+				e.dataTransfer.setData("title","今日头条")
+			}
+			
+			oRes.ondragenter = function(){
+				this.innerHTML = "可以释放"
+			}
+			
+			oRes.ondragover = function(e){
+				
+				e.preventDefault()
+			}
+			
+			oRes.ondrop = function(e){
+				e.preventDefault()
+				var test = e.dataTransfer.getData("title")
+				this.innerHTML = test
+			}
+			
+		</script>
+	</body>
+</html>

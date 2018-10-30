@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>datatransfer中的setData()和getData()设置文本</title>
+		<style>
+			*{
+				margin: 150px;
+			}
+			.drag{
+				width: 100px;
+				height: 100px;
+				border: 1px solid #666;
+			}	
+			.result{
+				width: 200px;
+				height: 200px;
+				background: #7FFFD4;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="drag" id="drag" draggable="true"></div>
+		<div class="result" id="result"></div>
+		<script type="text/javascript">
+			var oDrag = document.getElementById("drag");
+			var oRes = document.getElementById("result");
+			//拖拽元素
+			//拖拽开始
+			oDrag.ondragstart = function(e){
+//				console.log(e)
+				e.dataTransfer.setData("title","今日头条 ")  //设置数据
+			}
+			//目标元素
+			//进入元素是触发
+			oRes.ondragenter = function(){
+				this.innerHTML = "进入目标元素"
+			}
+			//在元素上触发
+			oRes.ondragover = function(e){
+				//必须阻止默认时间触发
+				e.preventDefault()
+			}
+			//离开元素是触发
+			oRes.ondragleave = function(){
+				this.innerHTML = ""
+			}
+			//在目标元素释放
+			oRes.ondrop = function(e){
+				//这里也要阻止默认事件
+				var test = e.dataTransfer.getData("title")   //获取设置数据的值
+				this.innerHTML = test
+				
+			}
+		</script>
+	</body>
+</html>

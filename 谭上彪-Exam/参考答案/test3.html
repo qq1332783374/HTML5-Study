@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript" src="js/jquery-1.11.0.js" ></script>
+		<style>
+			*{margin: 0;padding: 0;}
+			body{
+				font-family: "微软雅黑";
+				/*background: url("https://ss0.bdstatic.com/l4oZeXSm1A5BphGlnYG/skin/875.jpg?2") no-repeat;*/
+				
+			}
+			ul li{
+				list-style: none;
+			}
+			a{
+				text-decoration: none;
+				color: #333;
+			}
+			.content{
+				width: 1000px;
+				border: 1px solid #ddd;
+				margin: 0 auto;
+				overflow: hidden;
+			}
+			.content .content_header{
+				
+			}
+			.content h4{
+				padding: 10px;
+				border-bottom: 1px solid #ddd;
+				font-size:14px;
+				height: 20px;
+				line-height: 20px;
+			}
+			.content h4 .tips{
+				display: inline-block;
+				width: 12px;
+				height: 12px;
+				border: 1px solid #ddd;
+				border-radius: 50%;
+				position: relative;
+				top: 2px;
+			}
+			.content h4 .tips.active{
+				background: #FF6428;
+			}
+			.content .btn{
+				display: inline-block;
+				width: 20px;
+				height: 20px;
+				border: 1px solid #fff;
+				position: relative;
+				top: 2px;
+				font-size: 12px;
+				text-align: center;
+				line-height: 20px;
+				background: rgba(0,0,0,0.5);
+				color: #fff;
+			}
+			.content .v_content{
+				padding: 10px;
+			}
+			.content .v_content .scroll{
+				width: 1000%;
+				position: relative;
+			}
+			.content .v_content .scroll ul li{
+				width: 260px;
+				height: 140px;
+				border: 1px solid #ddd;
+				float: left;
+				margin-right: 4px;
+				margin-left: 4px;
+				cursor: pointer;
+				border-radius: 4px;
+			}
+			.content .v_content .scroll ul li img{
+				width: 260px;
+				height: 140px;
+			}
+			.content .v_content .scroll ul li .detail{
+				display: inline-block;
+				height: 20px;
+				font-size: 14px;
+				color: #333;
+				padding: 4px 0 0 4px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="content">
+			<div class="content_header">
+				<h4>
+					<a href="javascript:;" class="tips active"></a>
+					<a href="javascript:;" class="tips"></a>
+					
+					<a class="btn" href="javascript:;" id="prev"><</a>
+					<a class="btn" href="javascript:;" id="next">></a>
+				</h4>
+				
+			</div>
+			
+			<div class="v_content">
+				<div class="scroll">
+					<ul>
+						<li>
+							<img src="https://ss3.bdstatic.com/lPoZeXSm1A5BphGlnYG/skin_plus/882.jpg?2" data-img = "https://ss3.bdstatic.com/lPoZeXSm1A5BphGlnYG/skin/882.jpg?2"/>
+						</li>
+						<li>
+							<img src="https://ss3.bdstatic.com/iPoZeXSm1A5BphGlnYG/skin_plus/886.jpg?2" data-img = "https://ss3.bdstatic.com/iPoZeXSm1A5BphGlnYG/skin/886.jpg?2"/>
+						</li>
+						<li>
+							<img src="https://ss0.bdstatic.com/l4oZeXSm1A5BphGlnYG/skin_plus/875.jpg?2" data-img= "https://ss0.bdstatic.com/l4oZeXSm1A5BphGlnYG/skin/875.jpg?2" />
+						</li>
+						<li>
+							<img src="https://ss0.bdstatic.com/l4oZeXSm1A5BphGlnYG/skin_plus/883.jpg?2" data-img="https://ss0.bdstatic.com/l4oZeXSm1A5BphGlnYG/skin/883.jpg?2"/>
+						</li>
+						<li>
+							<img src="https://ss1.bdstatic.com/lvoZeXSm1A5BphGlnYG/skin_plus/876.jpg?2" data-img="https://ss1.bdstatic.com/lvoZeXSm1A5BphGlnYG/skin/876.jpg?2"/>
+						</li>
+						<li>
+							<img src="https://ss2.bdstatic.com/lfoZeXSm1A5BphGlnYG/skin_plus/829.jpg?2" data-img="https://ss2.bdstatic.com/lfoZeXSm1A5BphGlnYG/skin/829.jpg?2"/>
+						</li>
+						<li>
+							<img src="https://ss1.bdstatic.com/kvoZeXSm1A5BphGlnYG/skin_plus/872.jpg?2" data-img="https://ss1.bdstatic.com/kvoZeXSm1A5BphGlnYG/skin/872.jpg?2"/>
+						</li>
+						
+					</ul>
+				</div>
+				
+				
+				
+			</div>
+			
+			
+			
+		</div>
+		<script>
+			var num = 0
+			var count = 4
+			$("#next").click(function(){
+				var w = $(".v_content").width()
+				var len = $(".v_content li").length
+				var page_count = Math.ceil(len/count)
+				num++
+				if(num==page_count){
+					num = 0
+				}
+				$(".scroll").stop().animate({
+					"left":-num*w
+				})
+				$(".tips").eq(num).addClass("active").siblings(".tips").removeClass("active")
+				
+			})
+			
+			$("#prev").click(function(){
+				var w = $(".v_content").width()
+				var len = $(".v_content li").length
+				var page_count = Math.ceil(len/count)
+				num--
+				if(num<0){
+					num = page_count-1
+				}
+				$(".scroll").stop().animate({
+					"left":-num*w
+				})
+				$(".tips").eq(num).addClass("active").siblings(".tips").removeClass("active")
+			})
+			
+			$(".tips").click(function(){
+				num = $(this).index()
+
+				var w = $(".v_content").width()
+				var len = $(".v_content li").length
+				var page_count = Math.ceil(len/count)
+				$(".scroll").stop().animate({
+					"left":-num*w
+				})
+				$(".tips").eq(num).addClass("active").siblings(".tips").removeClass("active")
+				
+			})
+			
+			//点击li换皮肤
+//			background: url("https://ss0.bdstatic.com/l4oZeXSm1A5BphGlnYG/skin/875.jpg?2") no-repeat;
+			var bSrc = localStorage.getItem("bSrc") || ""
+			$("body").css("background","url("+bSrc+") no-repeat")
+			$("li").find("img").click(function(){
+				var bImg = $(this).data("img")
+				localStorage.setItem("bSrc",bImg)
+				$("body").css("background","url("+bImg+") no-repeat")
+
+			})
+			
+			
+			
+		</script>
+		
+	</body>
+</html>

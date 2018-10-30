@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>修改样式</title>
+		<script src="../js/jquery-1.11.0.js"></script>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			.container{
+				width: 820px;
+				margin: 20px auto;
+				text-align: center;
+				line-height: 2.2;
+			}
+			.red{
+				color: #D43F3A;
+			}
+			.green{
+				color: #006400;
+			}
+			.yellow{
+				color: #F7ECB5;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div id="context">
+				<p>床前明月光</p>
+				<p>疑是地上霜</p>
+				<p>举头望明月</p>
+				<p>低头思故乡</p>
+			</div>
+			<button class="big">放大</button>
+			<button class="small">缩小</button>
+			<button class="btn color-red">红色</button>
+			<button class="btn color-green">绿色</button>
+			<button class="btn color-yellow">黄色</button>
+		</div>
+		<script type="text/javascript">
+			//字体缩放
+			var gFontsize = localStorage.getItem("fontSize")||16
+			if(gFontsize.length>0){
+				$("p").css("font-size",gFontsize+"px")
+			}
+			$(".big").click(function(){
+				if(gFontsize.length==0){
+					gFontsize = 16
+				}
+				gFontsize++
+				$("p").css("font-size",gFontsize+"px")
+				localStorage.setItem("fontSize",gFontsize)
+			})
+			$(".small").click(function(){
+				gFontsize--
+				if(gFontsize<12){
+					alert("再小就没有啦")
+					gFontsize = 12
+					localStorage.setItem("fontSize",gFontsize)
+				}
+				$("p").css("font-size",gFontsize+"px")
+				localStorage.setItem("fontSize",gFontsize)
+			})
+			//换颜色
+			var arrColor = ["red","green","yellow"]
+			$.each(arrColor, function(i) {
+				$(".btn").eq(i).attr("data-color",arrColor[i])
+			});
+			var gFontColor = localStorage.getItem("FontColor")||"black"
+			if(gFontColor.length>0){
+				$("#context").css("color",gFontColor)
+			}
+			$(".btn").click(function(){
+				var color = $(this).data("color");
+				$("#context").css("color",color)
+				localStorage.setItem("FontColor",color)
+			})
+		
+		</script>
+	</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+	</head>
+	<body>
+		<input type="file" id="file" />
+		<input type="submit" id="btn"/>
+		<div id="result">
+			
+		</div>
+		<script>
+			var oFlie = document.getElementById("file")
+			var oBtn = document.getElementById("btn")
+			var oRes = document.getElementById("result")
+			
+			oBtn.onclick = function(){
+				var oType = oFlie.files[0].type
+//				console.log(oType)
+				var pattern = /^(image)\/\w+/
+				if(pattern.test(oType)){
+					oRes.innerHTML = "可以上传"
+				}else{
+					oRes.innerHTML = "不可以上传"
+				}
+				
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>历史记录</title>
+		<script src="../js/jquery-1.11.0.js"></script>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			.content{
+				width: 520px;
+				margin: 20px auto;
+			}
+			.header,.body,.footer{
+				margin-top: 25px;
+			}
+			.content input{
+				padding: 6px 12px;
+				border: 1px solid #ddd;
+				outline: none;
+				box-shadow: 2px 2px 4px #ddd;
+			}
+			.content .btn{
+				padding: 5px 12px;
+				border: 1px solid #1E9FFF;
+				background: #1E9FFF;
+				color: #fff;
+			}
+			.body ul li{
+				list-style: none;
+				margin-top: 15px;
+				padding: 6px 12px;
+				min-width: 60px;
+				border: 1px solid #ddd;
+				float: left;
+				margin-right: 10px;
+				text-align: center;
+				box-shadow: 2px 2px 4px #ddd;
+			}
+			.body ul li:hover{
+				transition: 0.5s;
+				background: #ddd;
+			}
+			.body ul li a{
+				text-decoration: none;
+				color: #666;
+			}
+			.footer a{
+				color: #D43F3A;
+				text-decoration: none;
+			}
+			.footer a:hover{
+				text-decoration: underline;
+			}
+			.claer{
+				clear: both;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="content">
+			<div class="header">
+				<input type="text" name="search" id="search" placeholder="请输入关键字"/>
+				<button type="button" class="btn">搜索</button>
+			</div>
+			<div class="body">
+				<h3>历史记录</h3>
+				<ul>
+					<!--<li><a href="javascript:;">11111</a></li>
+					<li><a href="javascript:;">1111111111111111111111</a></li>-->
+				</ul>
+				<div class="claer"></div>
+			</div>
+			<div class="footer">
+				<a href="javascript:;">清除记录</a>
+			</div>
+		</div>
+		<script type="text/javascript">
+			$(function(){
+				//获取本地存储的数据
+				var gTxt = JSON.parse(localStorage.getItem("searchData")) || [];
+				if(gTxt.length>0){
+					var str = '';
+					for (var i=0;i<gTxt.length;i++) {
+						str+='<li><a href="javascript:;">'+gTxt[i]+'</a></li>'
+					}
+					$(".body ul").append(str);
+				}
+				//本地存储数据
+				$(".btn").click(function(){
+					var textSer = $("#search").val();
+					for (var i=0;i<gTxt.length;i++) {
+						if(gTxt[i]==textSer){
+							return
+						}
+					}
+					gTxt.push(textSer);
+					//本地存储
+					localStorage.setItem("searchData",JSON.stringify(gTxt));
+					$("#search").val("");
+				})
+				//清除记录
+				$(".footer a").click(function(){
+					localStorage.clear()
+					$(".body ul li").remove()
+				})
+				
+				
+			})
+		</script>
+	</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>TODOLIst</title>
+		<script src="js/jquery-1.11.0.js"></script>
+		<style type="text/css">
+			ul{
+				display: none;
+			}
+			.content{
+				width: 520px;
+				margin: 20px auto;
+			}
+			ul li i{
+				float: right;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="content">
+			<textarea name="text" id="text"></textarea>
+			<button class="btn">发送</button>
+			<ul>
+				<!--<li>
+					<strong>11111111111111</strong><i>2017-09-22</i>
+				</li>-->
+			</ul>
+		</div>
+		<script type="text/javascript">
+			$(function(){
+				var gTxt = JSON.parse(localStorage.getItem("txt"))||[]
+				if(gTxt.length>0){
+					var str = ''
+					for (var i=0;i<gTxt.length;i++) {
+						str+="<li><strong>"+gTxt[i].oTxt+"</strong><i>"+gTxt[i].times+"</i></li>"
+					}
+					$("ul").show();
+					$("ul").append(str);
+				}
+				
+				//localStorage.setItem()  value一定要是字符串或者number
+				$(".btn").click(function(){
+					var oTxet = $("#text").val();
+					var obj = {
+						"oTxt":oTxet,
+						"times":newDate()
+					}
+					//本地储存
+					gTxt.push(obj)
+					localStorage.setItem("txt",JSON.stringify(gTxt))
+					var oLi = $("<li><strong>"+oTxet+"</strong><i>"+newDate()+"</i></li>")
+					$("ul").show();
+					$("ul").append(oLi);
+					$("#text").val("")
+				})
+				
+				function newDate(){
+					var oDate = new Date();
+					var oYears = oDate.getFullYear();
+					var oMonths = oDate.getMonth()
+					var oDays = oDate.getDate();
+					var oHours = oDate.getHours();
+					var oMins = oDate.getMinutes();
+					var oSec = oDate.getSeconds();
+					var str = oYears+"-"+(oMonths+1)+"-"+oDays+" "+oHours+":"+oMins+":"+oSec
+					return str
+				}
+				
+			})
+			
+			
+		</script>
+	</body>
+</html>

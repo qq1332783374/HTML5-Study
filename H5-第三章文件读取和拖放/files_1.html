@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>练习一到三加思考题</title>
+	</head>
+	<body>
+		<input type="file" id="files" />
+		<input type="submit" id="btn" />
+		<div id="result">
+			
+		</div>
+		<script type="text/javascript">
+			var oFiles = document.getElementById("files");
+			var oBtn = document.getElementById("btn");
+			var oRes = document.getElementById("result");
+			oBtn.onclick = function(){
+				//console.log(oFiles.files[0].type)  输出image/jpeg
+				var oType = oFiles.files[0].type;   //文件类型
+				var fs = oFiles.files[0];    //文件对象
+				var pattern = /^(image)\/\w+/  //判断文件类型的正则
+				if(!pattern.test(oType)){    
+					oRes.innerHTML = "不可以上传";
+				}
+				
+				var reader = new FileReader() ;  //实例化一个接口读取文件
+				reader.readAsDataURL(fs)   //读取文件
+				//console.log(reader)
+				//使用FileReader事件 onload 预览上传的图片
+				reader.onload = function(){
+//					oRes.innerHTML = "<img src='"+this.result+"' />"
+					var oNode = document.createElement("img");  //创建img标签
+					oNode.src = this.result;  //
+					oRes.appendChild(oNode)  //追加图片
+					oFiles.value = ''
+				}
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>会动的时钟</title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			.box{
+				width: 800px;
+				margin: 20px auto;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box">
+			<canvas id="myCanvas" width="800" height="800"></canvas>
+		</div>
+		<script type="text/javascript">
+			var myCanvas = document.getElementById("myCanvas");
+			var oGc = myCanvas.getContext('2d');
+			function draw(){
+				//获取本地时间
+				var oDate = new Date();
+				var oHours = oDate.getHours();
+				var oMin = oDate.getMinutes();
+				var oSec = oDate.getSeconds();
+				//计算时间的角度
+				var oHoursValue = (-90+oHours*30+oMin/2)*Math.PI/180;
+				var oMinValue = (-90+oMin*6)*Math.PI/180;
+				var oSecValue = (-90+oSec*6)*Math.PI/180;
+				//绘制时钟
+				var x = 400;
+				var y = 400;
+				var r = 400;
+				//绘制时钟的刻度
+				oGc.save();
+				oGc.beginPath();
+				for (var i=0;i<60;i++) {
+					oGc.moveTo(x,y);
+					oGc.arc(x,y,r,6*i*Math.PI/180,6*(i+1)*Math.PI/180)
+				}
+				oGc.closePath();
+				oGc.stroke();
+				oGc.restore();
+				//绘制第一个填充的大圆
+				oGc.save();
+				oGc.beginPath();
+				oGc.fillStyle = "#fff";
+				oGc.moveTo(x,y);
+				oGc.arc(x,y,r*19/20,0,360*Math.PI/180)
+				oGc.closePath();
+				oGc.fill();
+				oGc.restore();
+				//绘制时刻度
+				oGc.save();
+				oGc.beginPath();
+				oGc.lineWidth = 3 ;
+				for (var i=0;i<12;i++) {
+					oGc.moveTo(x,y);
+					oGc.arc(x,y,r,30*i*Math.PI/180,30*(i+1)*Math.PI/180)
+				}
+				oGc.closePath();
+				oGc.stroke();
+				oGc.restore();
+				//第二个填充圆
+				oGc.save();
+				oGc.beginPath();
+				oGc.fillStyle = "#fff";
+				oGc.moveTo(x,y);
+				oGc.arc(x,y,r*18/20,0,360*Math.PI/180)
+				oGc.closePath();
+				oGc.fill();
+				oGc.restore();
+				//时钟
+				oGc.save();
+				oGc.beginPath();
+				oGc.moveTo(x,y);
+				oGc.lineWidth = 3 ;
+				oGc.strokeStyle = "#1E9FFF";
+				oGc.arc(x,y,r*10/20,oHoursValue,oHoursValue);
+				oGc.closePath();
+				oGc.stroke();
+				oGc.restore();
+				//分针
+				oGc.save();
+				oGc.beginPath();
+				oGc.moveTo(x,y);
+				oGc.lineWidth = 3 ;
+				oGc.strokeStyle = "#7FFFD4";
+				oGc.arc(x,y,r*12/20,oMinValue,oMinValue);
+				oGc.closePath();
+				oGc.stroke();
+				oGc.restore();
+				//秒针
+				oGc.save();
+				oGc.beginPath();
+				oGc.moveTo(x,y);
+				oGc.lineWidth = 3 ;
+				oGc.strokeStyle = "#761C19";
+				oGc.arc(x,y,r*16/20,oSecValue,oSecValue);
+				oGc.closePath();
+				oGc.stroke();
+				oGc.restore();
+			}
+			setInterval(function(){
+				draw()
+			},1000)
+			draw()
+			
+		</script>
+	</body>
+</html>

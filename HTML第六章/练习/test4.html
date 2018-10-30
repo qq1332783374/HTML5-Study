@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>todo</title>
+		<script src="../js/jquery-1.11.0.js"></script>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			.container{
+				width: 520px;
+				margin: 20px auto;
+				padding: 5px;
+				border: 1px solid #ddd;
+				box-shadow: 2px 2px 4px #ddd;
+				line-height: 2.2;
+			}
+			textarea{
+				width: 97%;
+				height: 150px;
+				resize: none;
+				padding: 5px;
+				outline: none;
+			}
+			.btn{
+				padding: 6px 12px;
+				background: #1E9FFF;
+				border: 1px solid #1E9FFF;
+				color: #fff;
+			}
+			ul li{
+				list-style: none;
+				border: 1px solid #ddd;
+				padding: 0px 5px;
+				box-shadow: 2px 2px 4px #ddd;
+				margin-bottom: 15px;
+			}
+			ul li:hover{
+				transition: 0.9s;
+				background: #E7E7E7;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<textarea name="todo" rows="" cols=""></textarea>
+			<button class="btn add">添加</button>
+			<p>
+				代办：<strong class="wait">0</strong>
+				完成：<strong class="done">0</strong>
+			</p>
+			<hr />
+			<h4>代办</h4>
+			<ul class="wait-list">
+				<!--<li>11111</li>-->
+			</ul>
+			<h4>完成</h4>
+			<ul class="done-list">
+				<!--<li>1111111</li>-->
+			</ul>
+		</div>
+		<script>
+			$(function(){
+				//读取代办的长度
+				$(".wait").html(localStorage.length)
+				//读取数据
+				for (var i=0;i<localStorage.length;i++) {
+					var oLi = $("<li></li>"),
+						key = localStorage.key(i),
+						val = localStorage[key];
+					oLi.attr("data-hex",key);
+					oLi.html(val)
+					$(".wait-list").append(oLi)
+				}
+				//添加
+				var oDate = null;
+				$(".add").click(function(){
+					var oValue = $("textarea").val(),
+						times = new Date(),
+						oLi = $("<li>"+oValue+"</li>")
+					oDate = new Date().toLocaleString()
+					oLi.attr("data-hex",oDate)
+					localStorage.setItem(oDate,oValue)
+					$(".wait-list").append(oLi)
+					$("textarea").val("")
+					$(".wait").html(localStorage.length)
+				})
+				//完成
+				$(document).on("click",".wait-list li",function(){
+					$(this).clone(true).appendTo(".done-list")
+					$(this).remove()
+					localStorage.removeItem($(this).data("hex"))
+					$(".wait").html(localStorage.length)
+					$(".done").html($(".done-list li").length)
+				})
+				
+			})
+		</script>
+	</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<script type="text/javascript" src="js/jquery-1.11.0.js" ></script>
+	</head>
+	<body>
+		<div class="container">
+			 <a href="test2_1.html">编辑收货地址</a>
+			<hr />
+		<h3>收货地址</h3>
+		<div class="list">
+			<div class="item">
+				<!--<p>收件人:</p>
+				<p>地址:</p>
+				<p>电话:</p>-->
+			</div>
+		</div>
+		
+		</div>
+		<script>
+			var arr = JSON.parse(localStorage.getItem("arrInfo"))||[]
+//			console.log(arr)
+			if(arr.length>0){
+				var str = ""
+				 for (var i=0;i<arr.length;i++) {
+				 	str += '<p>收件人:'+arr[i].username+'</p><p>地址:'+arr[i].address+'</p><p>电话:'+arr[i].telphone+'</p>'
+				 }
+				 $(".item").append(str)
+			}
+			
+		</script>
+	</body>
+</html>

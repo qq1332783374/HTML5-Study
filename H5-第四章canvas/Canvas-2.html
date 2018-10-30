@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<title>三个矩形</title>
+	<style type="text/css">
+		body{
+			width: 100%;
+			height: 100%;
+		}
+	</style>
+</head>
+<body>
+	<canvas id="myCanvas" width="800" height="400"></canvas>
+	<script type="text/javascript">
+		var myCanvas = document.getElementById("myCanvas");
+		var oGc = myCanvas.getContext("2d");
+		// 创建渐变
+		var grd=oGc.createLinearGradient(0,0,200,0);
+		grd.addColorStop(0,"red");
+		grd.addColorStop(1,"white"); 
+		// 填充渐变
+		oGc.fillStyle=grd;
+		//实心矩形
+		oGc.fillRect(50,50,100,100)
+		//空心矩形
+		oGc.strokeRect(180.5,50.5,100,100)
+		//设置颜色
+		oGc.fillStyle = "#1E9FFF"
+		oGc.fillRect(300.5,50.5,100,100)
+	</script>
+</body>
+</html>

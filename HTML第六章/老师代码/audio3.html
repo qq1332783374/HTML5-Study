@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			*{margin: 0;padding: 0;}
+			ul li{
+				list-style:none;
+			}
+			.nav{
+				width: 750px;
+				height: 30px;
+			}
+			.nav ul li{
+				width: 100px;
+				height: 30px;
+				float: left;
+				text-align: center;
+				line-height: 30px;
+				border: 1px solid black;
+				position: relative;
+				overflow: hidden;
+			}
+			.nav ul li .color{
+				width: 100px;
+				height: 30px;
+				position: absolute;
+				left: 0;
+				top: 30px;
+				background: yellow;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="nav">
+			<ul id="ul">
+				<li au="a">
+					1
+					<div class="color"></div>
+				</li>
+				<li au="b">
+					2
+				</li>
+				<li au="c">
+					3
+				</li>
+				<li au="d">
+					4
+				</li>
+				
+				<li au="e">
+					5
+				</li>
+				<li au="f">
+					6
+				</li>
+				<li au="g">
+					7
+				</li>
+			</ul>
+		</div>
+		
+		<audio id="audio"></audio>
+		<!--http://s8.qhimg.com/share/audio/piano1/a4.mp3-->
+		<script>
+			var oUl = document.getElementById("ul")
+			var aLi = oUl.getElementsByTagName("li")
+			var oAudio = document.getElementById("audio")
+			
+			for (var i=0;i<aLi.length;i++) {
+				aLi[i].onmouseover = function(){
+					var str = this.getAttribute("au")
+					oAudio.src = "http://s8.qhimg.com/share/audio/piano1/"+str+"4.mp3"
+					oAudio.play()
+				}
+			}
+			
+		</script>
+	</body>
+</html>

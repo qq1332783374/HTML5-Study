@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			div{
+				width: 100px;
+				height: 100px;
+				background: red;
+				position: absolute;
+				top: 40px;
+				left: 10px;
+			}
+		</style>
+	</head>
+	<body>
+		<button id="btn1">向前</button>
+		<button id="btn2">向后</button>
+		<div id="move">
+			
+		</div>
+		<script>
+			var oBtn1 = document.getElementById("btn1")
+			var oMove = document.getElementById("move")
+			var timer = null
+			
+			oBtn1.onclick = function(){
+				clearInterval(timer)
+				timer = setInterval(function(){
+					var speed = parseInt(getStyle(oMove,"left"))+10
+					oMove.style.left = speed+"px"
+					if(speed>800){
+						speed = 800
+					}
+					if(speed == 800){
+						clearInterval(timer)
+					}
+				},30)
+				
+			}
+			
+			function getStyle(obj,attr){
+				return obj.currentStyle?obj.currentStyle(attr):getComputedStyle(obj)[attr]
+			}
+		</script>
+	</body>
+</html>

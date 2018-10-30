@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>收货地址</title>
+		<script src="../js/jquery-1.11.0.js"></script>
+		<link rel="stylesheet" type="text/css" href="../css/bootstrap.css"/>
+		<script src="../js/bootstrap.js"></script>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			.contaions{
+				width: 520px;
+				margin: 20px auto;
+				line-height: 1.2;
+			}
+			.header a {
+				text-decoration: none;
+				color: #1E9FFF;
+			}
+			.header a:hover{
+				text-decoration: underline;
+			}
+			.body ul li{
+				list-style: none;
+				cursor: pointer;
+				margin-bottom: 25px;
+			}
+			.body ul li .btns span {
+				color: #D43F3A;
+				float: right;
+				margin-left: 15px;
+				display: inline-block;
+				outline: none;
+			}
+			.body ul li span.change{
+				color: #1E9FFF;
+			}
+			.body ul li .btns span:hover{
+				text-decoration: underline;
+			}
+			.body ul li i{
+				font-style: normal;
+				float: right;
+			}
+			.address{
+				font-size: 14px;
+			}
+			.claer{
+				clear: both;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="contaions">
+			<div class="header">
+				<a href="test2_1.html">添加收货地址</a>
+			</div>
+			<hr />
+			<div class="body">
+				<h3>收货地址</h3>
+				<ul>
+					<!--<li>
+						<p class="username">
+							<span>小明</span><i>11111</i>
+						</p>
+						<p class="address">
+							<span>广州现代</span>
+						</p>
+						<hr />
+						<p class="btns">
+							<span class="del">删除</span>
+							<span class="change" data-toggle="modal" data-target="#changeModal">编辑</span>
+						</p>
+						<div class="claer"></div>
+					</li>-->
+				</ul>
+				<div class="claer"></div>
+			</div>
+		</div>
+		<!--编辑模态框 begin-->
+		<div class="modal fade" id="changeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">编辑信息</h4>
+					</div>
+					<div class="modal-body">
+						<!--<form class="form-horizontal">
+							<div class="form-group col-md-10">
+								<input type="text" class="form-control username" placeholder="请输入用户名" value=""/>
+							</div>
+							<div class="form-group col-md-10">
+								<input type="text" class="form-control tel" placeholder="请输入电话" value=""/>
+							</div>
+							<div class="form-group col-md-10">
+								<input type="text" class="form-control address" placeholder="请输入地址" value=""/>
+							</div>
+						</form>-->
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+						<button type="button" class="btn btn-primary ok">提交更改</button>
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal -->
+		</div>
+		<!--编辑模态框 end-->
+		<script type="text/javascript">
+			$(function(){
+				//获取添加收货地址的数据
+				var gTxt = JSON.parse(localStorage.getItem("add"))||[]
+				if(gTxt.length>0){
+					var str = '';
+					for (var i=0;i<gTxt.length;i++) {
+						str+=`
+							<li>
+								<p class="username">
+									<span>${gTxt[i].sUsername}</span><i>${gTxt[i].sTel}</i>
+								</p>
+								<p class="address">
+									<span>${gTxt[i].sAddress}</span>
+								</p>
+								<hr />
+								<p class="btns">
+									<span class="del">删除</span>
+									<span class="change" data-toggle="modal" data-target="#changeModal">编辑</span>
+								</p>
+								<div class="claer"></div>
+							</li>
+						`
+					}
+					$(".body ul").html(str)
+				}
+				//编辑收货地址
+				var _this = null;
+				var changeArr = [];
+				$(document).on("click",".change",function(){
+					_this = $(this).parents("li");
+					var changeName = _this.find(".username span").text();
+					var changeTel = _this.find(".username i").text();
+					var changeAddress = _this.find(".address span").text();
+					var obj = {
+						"cUsername":changeName,
+						"cTel":changeTel,
+						"cAddress":changeAddress
+					}
+					changeArr.push(obj)
+					var str = ''
+					for (var i=0;i<changeArr.length;i++) {
+						str=`
+							<form class="form-horizontal">
+								<div class="form-group col-md-10">
+									<input type="text" class="form-control username" placeholder="请输入用户名" value="${changeArr[i].cUsername}"/>
+								</div>
+								<div class="form-group col-md-10">
+									<input type="text" class="form-control tel" placeholder="请输入电话" value="${changeArr[i].cTel}"/>
+								</div>
+								<div class="form-group col-md-10">
+									<input type="text" class="form-control address" placeholder="请输入地址" value="${changeArr[i].cAddress}"/>
+								</div>
+							</form>
+						`
+					}
+					$("#changeModal .modal-body").html(str)
+					
+				})
+				//修改确定提交数据
+				var arrOk = [];
+				var arrOkTxt =JSON.parse(localStorage.getItem("changeTxt")) || [];
+				if(arrOkTxt.length>0){
+					var str = ''
+					$.each(arrOkTxt, function(i) {
+						str = `
+							<p class="username">
+								<span>${arrOkTxt[i].changeUser}</span><i>${arrOkTxt[i].changeTel}</i>
+							</p>
+							<p class="address">
+								<span>${arrOkTxt[i].changeAddress}</span>
+							</p>
+							<hr />
+							<p class="btns">
+								<span class="del">删除</span>
+								<span class="change" data-toggle="modal" data-target="#changeModal">编辑</span>
+							</p>
+							<div class="claer"></div>
+						`
+						$(".body ul li").eq(i).html(str)
+					});
+					
+				}
+				
+				$(document).on("click",".ok",function(){
+					$(this).parents("#changeModal").find("input").each(function(i){
+						arrOk.push($(this).val())
+					})
+					_this.find(".username span").text(arrOk[0])
+					_this.find(".username i").text(arrOk[1])
+					_this.find(".address span").text(arrOk[2])
+					arrOk = []
+					$("#changeModal").modal("hide")
+					var obj = {
+						"changeUser":_this.find(".username span").text(),
+						"changeTel":_this.find(".username i").text(),
+						"changeAddress":_this.find(".address span").text()
+					}
+					arrOkTxt.push(obj);
+					localStorage.setItem("changeTxt",JSON.stringify(arrOkTxt));
+					var str = ''
+					for (var i=0;i<arrOkTxt.length;i++) {
+						 str =`
+							<p class="username">
+								<span>${arrOkTxt[i].changeUser}</span><i>${arrOkTxt[i].changeTel}</i>
+							</p>
+							<p class="address">
+								<span>${arrOkTxt[i].changeAddress}</span>
+							</p>
+							<hr />
+							<p class="btns">
+								<span class="del">删除</span>
+								<span class="change" data-toggle="modal" data-target="#changeModal">编辑</span>
+							</p>
+							<div class="claer"></div>
+						`
+					}
+					_this.html(str);
+				})
+				
+				function _thisLi(){
+					return _this
+				}
+				
+			})
+		</script>
+	</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript" src="js/jquery-1.11.0.js" ></script>
+		<style>
+			*{
+				margin: 0;
+			}
+			em{
+				font-style: normal;
+			}
+			textarea{
+				resize: none;
+				outline: none;
+				height: 200px;
+				width:100%;
+			}
+			.container{
+				width: 500px;
+				margin: 20px auto;
+				border-radius: 4px;
+				border: 1px solid #ddd;
+				padding: 10px;
+			}
+			.container .header{
+				height: 250px;
+				width: 100%;
+			}
+			.header-footer{
+				height: 20px;
+				
+			}
+			.header-footer .btn{
+				float: right;
+			}
+			.list-item{
+				border: 1px solid #ddd;
+				padding: 10px;
+				margin-top: 10px;
+				position: relative;
+				cursor: pointer;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="header">
+				<textarea id="text"></textarea>
+				<div class="header-footer">
+					<button class="btn send">发送</button>
+				</div>
+			</div>
+			
+			<div class="list">
+				<div class="list-header">
+					<span class="noDone">待帮<em>0</em></span>
+					<span class="done">已完成<em>0</em></span>
+				</div>
+				<div class="list-content">
+					
+				</div>
+				
+				<div class="list-footer">
+					<h4>已完成</h4>
+					<!--<div class="list-item">
+						
+					</div>-->
+				</div>
+				
+			</div>
+			
+			
+		</div>
+		<script>
+			$(function(){
+				var arrNoDone = JSON.parse(localStorage.getItem("arrNoDone"))||[]
+				var newArr = JSON.parse(localStorage.getItem("newArr"))||[]
+//				console.log(newArr)
+				if(arrNoDone.length>0){
+					var noDone = arrNoDone.length
+					var str = ""
+					for (var i=0;i<arrNoDone.length;i++) {
+						str += '<div class="list-item">'+arrNoDone[i]+'</div>'
+					}
+					$(".list-content").append(str)
+					$(".noDone em").html(noDone)
+				}else{
+					var noDone = 0
+				}
+				
+				
+				if(newArr.length>0){
+					var done = newArr.length
+					var str = ""
+					for (var i=0;i<newArr.length;i++) {
+						str += '<div class="list-item">'+newArr[i]+'</div>'
+					}
+					$(".list-footer").append(str)
+					$(".done em").html(done)
+				}else{
+					var done = 0
+				}
+				
+				
+				$(".send").click(function(){
+					var oText = $("#text").val()
+					if(oText.length<0){
+						alert('不能为空')
+					}else {
+						noDone++
+						arrNoDone.push(oText)
+						localStorage.setItem("arrNoDone",JSON.stringify(arrNoDone))
+						var str = '<div class="list-item">'+oText+'</div>'
+						$(".list-content").append(str)
+						$(".noDone em").html(noDone)
+						$("#text").val("")
+					}
+					
+				})
+				
+				
+				$(document).on("click",".list-item",function(){
+//					alert(1)
+					noDone--
+					done++
+					var index = $(this).index()
+					var a = arrNoDone.splice(index,1)[0]
+					var dom = $(this).clone()
+//					console.log(a)
+					newArr.push(a)
+					localStorage.setItem("arrNoDone",JSON.stringify(arrNoDone))
+					localStorage.setItem("newArr",JSON.stringify(newArr))
+					$(this).remove()
+					$(".noDone em").html(noDone)
+					$(".done em").html(done)
+					$(".list-footer").append(dom)
+				})
+				
+			})
+			
+		</script>
+	</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			body{
+				background: black;
+			}
+			canvas{
+				background: #fff;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="canvas" width="400" height="400">
+			不支持
+		</canvas>
+		<script>
+			var oC = document.getElementById("canvas")
+			var oGC = oC.getContext("2d")
+			
+			oGC.translate(50,50)
+			oGC.scale(0.5,0.5)
+			oGC.rotate(45*Math.PI/180)
+//			oGC.rotate(20*Math.PI/180)
+//			oGC.rotate(25*Math.PI/180)
+			oGC.strokeRect(0,0,100,100)
+			
+
+		</script>
+	</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<script type="text/javascript" src="js/jquery-1.11.0.js" ></script>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<style>
+			.item{
+				display: inline-block;
+				padding: 10px 15px;
+				border: 1px solid #ddd;
+				margin-right: 10px;
+				border-radius: 8px;
+				cursor: pointer;
+			}
+		</style>
+	
+	</head>
+	<body>
+		<!--个人搜索-->
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6">
+					<input class="form-control" placeholder="请输入东西" id="search_val" />
+				</div>
+				<div class="col-md-6">
+					<button class="btn btn-primary search">搜索</button>
+				</div>
+			</div>
+			<h4>历史纪录</h4>
+			<div class="item-list">
+				<!--<div class="item">
+					1
+				</div>
+				<div class="item">
+					1
+				</div>-->
+			</div>
+			<hr />
+			<a href="javascript:;" class="text-danger" id="clear">清除数据</a>
+		</div>
+		<script>
+			var arr = JSON.parse(localStorage.getItem("arrList")) || []
+			if(arr.length>0){
+				var str = ""
+				for (var i=0;i<arr.length;i++) {
+					 str += '<div class="item">'+arr[i]+'</div>'
+				}
+				$(".item-list").append(str)
+			}
+			
+			
+			$(".search").click(function(){
+				var oText = $("#search_val").val()
+				for(var i=0;i<arr.length;i++){
+					if(arr[i]==oText){
+						return
+					}
+				}
+				
+				arr.push(oText)
+				
+				localStorage.setItem("arrList",JSON.stringify(arr))
+				var str = '<div class="item">'+oText+'</div>'
+				$(".item-list").append(str)
+				
+			})
+			
+		</script>
+		
+	</body>
+</html>

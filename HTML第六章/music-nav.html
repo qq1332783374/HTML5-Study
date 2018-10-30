@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>音乐导航</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        ul li{
+            list-style: none;
+        }
+        .nav{
+            width: 854px;
+            margin: 20px auto;
+            box-shadow: 2px 2px 4px #ddd;
+        }
+        .nav ul li{
+            float: left;
+            width: 120px;
+            height: 40px;
+            text-align: center;
+            line-height: 40px;
+            position: relative;
+            border: 1px solid #ddd;
+            overflow: hidden;
+        }
+        .clear{
+            clear: both;
+        }
+        .color{
+            width: 120px;
+            height: 40px;
+            position: absolute;
+            top: 40px;
+            background: #d9d9d9;
+        }
+        #list li:hover{
+            color: #fff;
+        }
+        #list li:hover .color{
+            transition: 0.3s;
+            top: 0px;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <ul id="list">
+            <li>
+                1
+                <div class="color"></div>
+            </li>
+            <li>
+                2
+                <div class="color"></div>
+            </li>
+            <li>
+                3
+                <div class="color"></div>
+            </li>
+            <li>
+                4
+                <div class="color"></div>
+            </li>
+            <li>
+                5
+                <div class="color"></div>
+            </li>
+            <li>
+                6
+                <div class="color"></div>
+            </li>
+            <li>
+                7
+                <div class="color"></div>
+            </li>
+        </ul>
+        <div class="clear"></div>
+        <audio src="" id="oAudio"></audio>
+    </div>
+    <script>
+        var oUl = document.getElementById("list");
+        var aLi = oUl.getElementsByTagName('li');
+        var oDiv = document.getElementsByClassName('color');
+        var oAudio = document.getElementById("oAudio");
+        var abc = ['a','b','c','d','e','f','g'];
+        for(var i=0;i<aLi.length;i++){
+            aLi[i].index = i;
+            aLi[i].setAttribute("au",abc[i]);
+            aLi[i].onmouseover = function(){
+                var num = Math.floor(Math.random()*256);
+                var num1 = Math.ceil(Math.random()*256);
+                var num2 = Math.ceil(Math.random()*256);
+                var str = this.getAttribute('au');
+                oAudio.src = "http://s8.qhimg.com/share/audio/piano1/"+str+"4.mp3";
+                oAudio.play();
+                oDiv[this.index].style.background = 'rgb('+num+','+num1+','+num2+')'
+            }
+        }
+    </script>
+</body>
+</html>

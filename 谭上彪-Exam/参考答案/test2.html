@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style>
+			*{ margin:0; padding:0;}
+			body{ background:black;}
+			#div1{ background:white; width:600px; margin:20px auto;}
+		</style>
+	</head>
+	<body>
+		<div id="div1">
+			<canvas id="c1" width="600" height="600"></canvas>
+		</div>
+		<script>
+			window.onload = function(){
+			var oC = document.getElementById('c1');
+			var oGC = oC.getContext('2d');
+				
+			oGC.beginPath();
+			oGC.arc(300,200,200,-90*Math.PI/180,180*Math.PI/180,false);
+			oGC.stroke();
+			
+			oGC.beginPath();
+			oGC.arc(250,200,150,180*Math.PI/180,0*Math.PI/180,false);
+			oGC.stroke();
+			oGC.beginPath();
+			oGC.arc(400,200,20,0*Math.PI/180,360*Math.PI/180,false);
+			oGC.stroke();
+		};
+		</script>
+	</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>添加收货地址</title>
+		<link rel="stylesheet" type="text/css" href="../css/bootstrap.css"/>
+		<script src="../js/jquery-1.11.0.js"></script>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			.container{
+				width: 520px;
+				margin: 20px auto;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<h3>添加收货地址</h3>
+			<form class="form-horizontal">
+				<div class="form-group">
+					<input type="text" class="form-control username" placeholder="请输入用户名" />
+				</div>
+				<div class="form-group">
+					<input type="text" class="form-control tel" placeholder="请输入电话" />
+				</div>
+				<div class="form-group">
+					<input type="text" class="form-control address" placeholder="请输入地址" />
+				</div>
+				<div class="form-group">
+					<button type="button" class="btn btn-info">提交</button>
+				</div>
+			</form>
+		</div>
+		<script type="text/javascript">
+			$(function(){
+				var gTxt = JSON.parse(localStorage.getItem("add"))||[]
+				$(".btn").click(function(){
+					//获取信息
+					var oUsername = $(".username").val();
+					var oTel = $(".tel").val();
+					var oAddress = $(".address").val();
+					var obj = {
+						"sUsername":oUsername,
+						"sTel":oTel,
+						"sAddress":oAddress
+					}
+					gTxt.push(obj)
+					localStorage.setItem("add",JSON.stringify(gTxt));
+					$("form input").val("");
+					alert("添加成功！")
+					window.location.href = "test2.html";
+				})
+
+			})
+		</script>
+	</body>
+</html>

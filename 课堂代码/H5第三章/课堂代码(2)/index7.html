@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>事件拖拽</title>
+		<style>
+			.drag{
+				width: 100px;
+				height: 100px;
+				border: 1px solid black;
+				margin-bottom: 100px;
+			}
+			
+			.result{
+				width: 200px;
+				height: 200px;
+				background: red;
+			}
+		</style>
+	</head>
+	<body style="margin: 100px;">
+		<div id="drag" class="drag" draggable="true">
+			
+		</div>
+		
+		<div id="result" class="result">
+			
+		</div>
+		
+		
+		
+		<script>
+		
+			var oDrag = document.getElementById("drag")
+			var oRes = document.getElementById("result")
+			var i = 0
+			//开始拖拽
+			oDrag.ondragstart = function(){
+				console.log(1)
+			}
+			
+			//拖拽中触发事件
+			oDrag.ondrag = function(){
+//				document.title = i++
+			}
+			//拖拽结束触发事件
+			oDrag.ondragend = function(){
+				console.log("结束了..")
+			}
+			
+			//进入元素时触发
+			oRes.ondragenter = function(){
+				this.style.background = "blue"
+			}
+			
+			oRes.ondragover = function(e){
+				document.title = i++
+				e.preventDefault()
+			}
+			
+			oRes.ondragleave = function(){
+				this.style.background = "red"
+			}
+			
+			oRes.ondrop = function(e){
+				e.preventDefault()
+				alert(1)
+			}
+			
+		</script>
+	</body>
+</html>

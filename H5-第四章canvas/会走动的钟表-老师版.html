@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>走动的表</title>
+		<style>
+			body{
+				background: black;
+			}
+			canvas{
+				background: #fff;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="canvas" width="400" height="400">
+			不支持
+		</canvas>
+		<script>
+			var oC = document.getElementById("canvas")
+			var oGC = oC.getContext("2d")
+			
+			function draw(){
+				var oDate = new Date()
+				var oHours = oDate.getHours()
+				var oMin = oDate.getMinutes()
+				var oSec = oDate.getSeconds()
+				
+				var oHoursValue = (-90+oHours*30+oMin/2)*Math.PI/180
+				var oMinValue = (-90+oMin*6)*Math.PI/180
+				var oSecValue = (-90+oSec*6)*Math.PI/180
+				
+				//60个小刻度
+				var x = 200
+				var y = 200
+				var r = 150
+				oGC.save()
+				oGC.beginPath()
+				for (var i=0;i<60;i++) {
+					oGC.moveTo(x,y)
+					oGC.arc(x,y,r,6*i*Math.PI/180,6*(i+1)*Math.PI/180)
+				}
+				
+				oGC.closePath()
+				oGC.stroke()
+				oGC.restore()
+				
+				//第一个大圆
+				oGC.save()
+				oGC.beginPath()
+				oGC.fillStyle = "white"
+				oGC.moveTo(x,y)
+				oGC.arc(x,y,r*19/20,0,360*Math.PI/180)
+				oGC.closePath()
+				oGC.fill()
+				oGC.restore()
+				//12个大刻度
+				oGC.save()
+				oGC.beginPath()
+				oGC.lineWidth = 3
+				for (var i=0;i<12;i++) {
+					oGC.moveTo(x,y)
+					oGC.arc(x,y,r,30*i*Math.PI/180,30*(i+1)*Math.PI/180)
+				}
+				oGC.closePath()
+				oGC.stroke()
+				oGC.restore()
+				//第二个圆
+				oGC.save()
+				oGC.beginPath()
+				oGC.fillStyle = "white"
+				oGC.moveTo(x,y)
+				oGC.arc(x,y,r*18/20,0,360*Math.PI/180)
+				oGC.closePath()
+				oGC.fill()
+				oGC.restore()
+				//时针
+				oGC.save()
+				oGC.beginPath()
+				oGC.moveTo(x,y)
+				oGC.strokeStyle = "blue"
+				oGC.arc(x,y,r*10/20,oHoursValue,oHoursValue)
+				oGC.closePath()
+				oGC.stroke()
+				oGC.restore()
+				//分针
+				oGC.save()
+				oGC.beginPath()
+				oGC.moveTo(x,y)
+				oGC.strokeStyle = "green"
+				oGC.arc(x,y,r*12/20,oMinValue,oMinValue)
+				oGC.closePath()
+				oGC.stroke()
+				oGC.restore()
+				//秒针
+				oGC.save()
+				oGC.beginPath()
+				oGC.moveTo(x,y)
+				oGC.strokeStyle = "red"
+				oGC.arc(x,y,r*16/20,oSecValue,oSecValue)
+				oGC.closePath()
+				oGC.stroke()
+				oGC.restore()
+			}
+			
+			setInterval(function(){
+				draw()
+				
+			},1000)
+			
+			
+			draw()
+			
+			
+		</script>
+	</body>
+</html>

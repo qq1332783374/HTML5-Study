@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+	</head>
+	<body>
+		
+		<audio id="audio" src="video/johann_sebastian_bach_air.mp3" controls="controls" autoplay="autoplay"></audio>
+		
+		<script>
+			window.onload = function(){
+				var oAudio = document.getElementById("audio")
+//				console.log(oAudio.duration)
+				oAudio.addEventListener("canplay",function(){
+					oAudio.ontimeupdate = function(){
+						console.log(oAudio.currentTime)
+					}
+					
+					
+				})
+				
+			}
+			
+		</script>
+		
+</body>
+</html>

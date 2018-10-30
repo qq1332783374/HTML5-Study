@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>画饼状图</title>
+		<style type="text/css">
+			.content{
+				width: 800px;
+				margin:0 auto;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<div class="content">
+			<canvas id="myCanvas" width="800" height="520"></canvas>
+		</div>
+		<script type="text/javascript">
+			var myCanvas = document.getElementById("myCanvas");
+			var oGc = myCanvas.getContext("2d");
+ 
+	        oGc.moveTo(400, 300);
+	        oGc.fillStyle='#FDB128';
+	        oGc.arc(400, 300, 150, Math.PI / 180 * 0, Math.PI / 180 * 360*0.333, false);
+	        oGc.fill();
+	 
+	        oGc.beginPath();
+	        oGc.moveTo(400, 300);
+	        oGc.save();
+	        oGc.fillStyle='#F46950';
+	        oGc.arc(400, 300, 150, Math.PI / 180 * 360*0.333, Math.PI / 180 * 360*0.666, false);
+	        oGc.fill();
+	 
+	 
+	        oGc.beginPath();
+	        oGc.moveTo(400, 300);
+	        oGc.fillStyle='#1DAC91';
+	        oGc.arc(400, 300, 150, Math.PI / 180 * 360*0.666, Math.PI / 180 * 360*1, false);
+	        oGc.fill();
+	 
+		</script>
+	</body>
+</html>

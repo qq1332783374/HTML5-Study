@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="//at.alicdn.com/t/font_845464_r0f7y9bg1m.css" />
+		
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			ul li{
+				list-style: none;
+			}
+			.music{
+				width: 500px;
+				height:40px;
+				background: #eee;
+				margin: 20px auto;
+				line-height:40px;
+				
+			}
+			.musicL{
+				float: left;
+			}
+			.progress{
+				float: left;
+				font-size: 14px;
+				width: 300px;
+				height:40px;
+				margin-left:10px;
+			}
+			.load{
+				display: inline-block;
+				width: 200px;
+				height: 5px;
+				background:#ddd;
+				cursor: pointer;
+				position: relative;
+				top: -2px;
+			}
+			.circle{
+				width:0px;
+				height: 5px;
+				background: red;
+				position: relative;
+				left: 0;
+				top: 0;
+			}
+			.round{
+				position: absolute;
+				width: 10px;
+				height: 10px;
+				border-radius: 50%;
+				background: #63A35C;
+				left:0px;
+				top: -3px;
+			}
+			.music_list{
+				width: 500px;
+				background: #DDDDDD;
+				margin: 0 auto;
+				
+			}
+			.music_list li{
+				height: 40px;
+				border-bottom: 1px solid #ccc;
+				line-height: 40px;
+				cursor: pointer;
+			}
+		</style>
+	
+	</head>
+	<body>
+		<div class="music">
+			<div class="musicL">
+				<i class="iconfont icon-shangyishou"></i>
+				<span class="play" id="play">
+					<i class="iconfont icon-bofang"></i>
+				</span>
+				<i class="iconfont icon-xiayishou"></i>
+			</div>
+			
+			<div class="progress">
+				<span class="start_time" id="start_time">00:00</span>
+				<div class="load" id="load">
+					<div class="circle" id="circle">
+						<div class="round" id="round">
+							
+						</div>
+						
+					</div>
+				</div>
+				<span class="total_time" id="total_time">00:00</span>
+			</div>
+			
+		</div>
+		<audio id="audio"></audio>
+		
+		<div class="music_list">
+			<ul>
+				<li>明年今日</li>
+				<li>1</li>
+				<li>1</li>
+				<li>1</li>
+			</ul>
+		</div>
+		
+		<script>
+			var oTotal = document.getElementsByClassName("total_time")[0]
+			var oAudio = document.getElementById("audio")
+			var oPlay = document.getElementById("play")
+			var oCircle = document.getElementById("circle")
+			var oStart = document.getElementById("start_time")
+			var oRound = document.getElementById("round")
+			var oLoad = document.getElementById("load")
+			console.log(oLoad.offsetLeft)
+			var num = 0
+			var arr = ["video/4.mp3"]
+			oAudio.src = arr[num]
+			//转换总时长
+			oAudio.addEventListener("canplay",function(){
+				oTotal.innerHTML = getMin(this.duration)	
+			})
+			
+			//点击开始播放
+			oPlay.onclick = function(){
+				if(oAudio.paused){
+					oAudio.play()
+					oPlay.innerHTML = '<i class="iconfont icon-iconstop"></i>'
+					
+				}else {
+					oAudio.pause()
+					oPlay.innerHTML = '<i class="iconfont icon-bofang"></i>'
+				}
+			}
+			
+			//监听进度变化
+			oAudio.ontimeupdate = function(){
+				var pre = Math.floor(oAudio.currentTime/oAudio.duration*200)
+				oCircle.style.width = pre+"px"
+				oStart.innerHTML = getMin(oAudio.currentTime)
+				oRound.style.left = oCircle.style.width
+			}
+			
+			//点击进度变化
+			oLoad.onclick = function(e){
+				var l = e.clientX-oLoad.offsetLeft
+				oAudio.currentTime = (l/200)*oAudio.duration
+				console.log("2+click")
+			}
+			//拖拽原点
+			oRound.onmousedown = function(e){
+				document.onmousemove = function(e){
+					var l = e.clientX-oLoad.offsetLeft
+					oAudio.currentTime = (l/200)*oAudio.duration
+					
+				}
+				document.onmouseup = function(){
+					document.onmousedown = null
+					document.onmousemove = null
+					console.log("up")
+				}
+				return false
+				
+			}
+			//播放结束
+			oAudio.addEventListener("ended",function(){
+				alert(1)
+			})
+			
+			
+			//获取分钟的函数
+			function getMin(time){
+				var m = Math.floor(time/60)
+				var s = Math.floor(time%60)
+				if(m<=9){
+					m="0"+m
+				}
+				if(s<=9){
+					s = "0"+s
+				}
+				return m+":"+s
+			}
+		</script>
+		
+	</body>
+</html>

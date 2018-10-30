@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>图画板</title>
+		<style type="text/css">
+			.context{
+				width: 500px;
+				margin: 20px auto;
+				border: 5px solid #ddd;
+				box-shadow: 2px 2px 4px 4px #ddd;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="context">
+			<canvas id="myCanvas" width="500" height="500"></canvas>
+		</div>
+		<script type="text/javascript">
+			var myCanvas = document.getElementById("myCanvas");
+			var ctx = myCanvas.getContext("2d");
+			myCanvas.onmousedown = function(e){
+//				console.log(e)
+				var disX = e.clientX - myCanvas.offsetLeft;
+				var disY = e.clientY - myCanvas.offsetTop;
+				
+				ctx.moveTo(disX,disY);
+				document.onmousemove = function(e){
+					var disX = e.clientX - myCanvas.offsetLeft;
+					var disY = e.clientY - myCanvas.offsetTop;
+					ctx.lineTo(disX,disY);
+					ctx.stroke();
+				}
+				document.onmouseup = function(){
+					document.onmousedown = null ;
+					document.onmousemove = null ;
+				}
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			body{
+				background: black;
+			}
+			canvas{
+				background: #fff;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="canvas" width="400" height="400">
+			不支持
+		</canvas>
+		<script>
+			var oC = document.getElementById("canvas")
+			var oGC = oC.getContext("2d")
+			var num = 0
+			
+			setInterval(function(){
+				num++
+				oGC.save()
+				oGC.clearRect(0,0,oC.width,oC.height)
+				oGC.translate(100,100)
+				oGC.rotate(num*Math.PI/180,num*Math.PI/180)
+				oGC.translate(-50,-50)
+				oGC.fillRect(0,0,100,100)
+				oGC.restore()
+			},30)
+			
+			
+			
+
+		</script>
+	</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>贝塞尔曲线</title>
+		<style>
+			body{
+				background: black;
+			}
+			canvas{
+				background: #fff;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="canvas" width="400" height="400">
+			不支持
+		</canvas>
+		<script>
+			var oC = document.getElementById("canvas")
+			var oGC = oC.getContext("2d")
+			
+//			oGC.moveTo(100,200)
+//			oGC.quadraticCurveTo(100,100,200,100)
+//			oGC.stroke()
+
+			oGC.moveTo(100,200)
+			oGC.bezierCurveTo(100,100,200,200,200,100)
+			oGC.stroke()
+			
+		</script>
+	</body>
+</html>

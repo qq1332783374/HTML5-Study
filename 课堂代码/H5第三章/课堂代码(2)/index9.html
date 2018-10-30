@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>利用datatransfer实现文本预览</title>
+		<style>
+			
+			
+			.result{
+				width: 200px;
+				height: 200px;
+				background: red;
+			}
+		</style>
+	</head>
+	<body style="margin: 100px;">
+	
+		
+		<div class="result">
+			
+		</div>
+		<div id="view">
+			
+		</div>
+		
+		
+		
+		<script>
+			var oRes = document.getElementsByTagName("div")[0]
+			var oView = document.getElementById("view")
+			
+			oRes.ondragenter = function(){
+				this.innerHTML = "可以放手"
+			}
+			
+			oRes.ondragover = function(e){
+				e.preventDefault()
+			}
+			
+			oRes.ondrop = function(e){
+				e.preventDefault()
+//				console.log(e.dataTransfer)
+				var fs = e.dataTransfer.files[0]
+				var reader = new FileReader()
+				reader.readAsText(fs)
+				reader.onload = function(){
+//					console.log(this.result)
+					oView.innerHTML = this.result
+				}
+			}
+			
+		</script>
+	</body>
+</html>

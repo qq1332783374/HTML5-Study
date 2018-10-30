@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			.load{
+				width: 200px;
+				height: 30px;
+				background: #ddd;
+				position: relative;
+			}
+			.progress{
+				width: 0px;
+				height: 30px;
+				position: relative;
+				top: 0;
+				left: 0;
+				background: red;
+			}
+		</style>
+	</head>
+	<body>
+		<video src="Intermission-Walk-in_512kb.mp4" id="a"></video>
+		
+		<div class="play">
+			<button id="btn1">播放</button>
+			<button id="btn2">全屏</button>
+		</div>
+		
+		<div class="load" id="load">
+			<div class="progress" id="progress">
+				
+			</div>
+		</div>
+		
+		<script>
+			var obtn1 = document.getElementById("btn1")
+			var obtn2 = document.getElementById("btn2")
+			var oProgress = document.getElementById("progress")
+			var oLoad = document.getElementById("load")
+			var oA = document.getElementById("a")
+			window.onload = function(){
+				var oA = document.getElementById("a")
+				oA.addEventListener("canplay",function(){
+					obtn1.onclick = function(){
+						if(oA.paused){
+							oA.play()
+							this.innerHTML = "暂停"
+						}else {
+							oA.pause()
+							this.innerHTML = "播放"
+						}
+					}
+				oA.ontimeupdate = function(){
+					var ctime = this.currentTime
+					var cduration = this.duration
+					var pre = ctime/cduration*200
+					oProgress.style.width = pre+"px"
+				}
+				
+				oLoad.onclick = function(e){
+			        var event = e || window.event;
+			        oA.currentTime = (event.offsetX / this.offsetWidth) * oA.duration;
+			   };
+			   obtn2.onclick = function(){
+			   	  oA.webkitRequestFullScreen();
+			   }
+			   
+			})
+				
+			}
+		</script>
+	</body>
+</html>

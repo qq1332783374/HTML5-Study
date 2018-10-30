@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<title>画圆</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		.content{
+			width: 800px;
+			height: 800px;
+			margin: 20px auto;
+			border: 1px solid #ddd;
+			box-shadow: 2px 2px 4px #ddd;
+		}
+	</style>
+</head>
+<body>
+	<div class="content">
+		<canvas id="myCanvas" width="800px" height="800px"></canvas>
+	</div>
+	<script type="text/javascript">
+		var myCanvas = document.getElementById("myCanvas");
+		var oCG = myCanvas.getContext("2d");
+		//画曲线
+		oCG.beginPath();
+        oCG.arc(400,400,250,-90*Math.PI/180,180*Math.PI/180,false);
+        oCG.stroke();
+        //内小圆
+        oCG.beginPath();
+        oCG.arc(350, 400, 200, 180 * Math.PI / 180, 0, false);
+        oCG.stroke();
+        //末尾圆
+        oCG.beginPath();
+        oCG.arc(550, 400, 30, 0, 360 * Math.PI / 180, false);
+        oCG.stroke();</script>
+</body>
+</html>

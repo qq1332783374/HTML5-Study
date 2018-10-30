@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>利用datatransfer实现单张图片预览</title>
+		<style>
+			*{
+				margin:0;
+			}
+			.result{
+				width: 200px;
+				height: 200px;
+				background: red;
+			}
+		</style>
+	</head>
+	<body style="margin: 200px;">
+		
+		<div id="result" class="result">
+			
+		</div>
+		<ul>
+			
+		</ul>
+		<script>
+			var oRes = document.getElementById("result")
+			var oUl = document.getElementsByTagName("ul")[0]
+			var obj = {}
+			
+			oRes.ondragenter = function(){
+				this.innerHTML = "可以放"
+			}
+			
+			oRes.ondragover = function(e){
+				e.preventDefault()
+			}
+			
+			oRes.ondrop = function(e){
+				e.preventDefault()
+				var fs = e.dataTransfer.files
+				var reader = new FileReader()
+				console.log(fs)
+				reader.readAsDataURL(fs[0])
+				
+				reader.onload = function(){
+					
+					if(!obj[this.result]){
+						var oLi = document.createElement("li")
+						var oImg = document.createElement("img")
+						oImg.src = this.result
+						oImg.width = 100
+						oImg.height = 100
+						oLi.appendChild(oImg)
+						oUl.appendChild(oLi)
+						obj[this.result] = this.result
+					}else{
+						alert("不要重复提交")
+					}
+					
+					
+				}
+			}
+			
+			
+//			var obj = {
+//				name:"a1"
+//			}
+//			console.log(obj["name"])
+			
+		</script>
+	</body>
+</html>

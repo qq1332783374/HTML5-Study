@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>绘制一个空心圆</title>
+	</head>
+	<body>
+		<!--创建一个canvas-->
+		<canvas id="myCanvas" width="800" height="800"></canvas>
+		
+		<script type="text/javascript">
+			//获取canvas
+			var myCanvas = document.getElementById("myCanvas");
+			//设置canvas的绘图环境
+			var oGx = myCanvas.getContext("2d");
+			//开始路径
+			oGx.beginPath();
+			//x,y坐标为100，半径为50，起始角度为0  结束角为360 顺时针旋转
+			oGx.arc(100,100,50,0,360*Math.PI/180,false);
+			//绘制线条
+			oGx.stroke();
+			//结束路径
+			oGx.closePath();
+		</script>
+	</body>
+</html>	

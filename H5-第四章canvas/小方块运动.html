@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<title>小方块运动</title>
+	<style type="text/css">
+		body{
+			width: 100%;
+			height: 100%;
+		}
+	</style>
+</head>
+<body>
+	<canvas id="myCanvas" width="800" height="400"></canvas>
+	<script type="text/javascript">
+		var myCanvas = document.getElementById("myCanvas");
+		var oGc = myCanvas.getContext("2d");
+		var num = 0
+		setInterval(function(){
+			num++;
+			oGc.clearRect(0,0,100*num,100*num)
+			oGc.fillRect(num,num,100,100)
+			
+		},30)
+		
+		
+	</script>
+</body>
+</html>

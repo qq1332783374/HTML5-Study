@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>自定义播放器</title>
+		<style>
+			.load{
+				width: 200px;
+				height: 30px;
+				background: #ddd;
+				position: relative;
+			}
+			.progress{
+				width:0px;
+				height: 30px;
+				background: red;
+				position: absolute;
+				left: 0;
+				top: 0;
+			}
+		</style>
+	</head>
+	<body>
+		
+		
+		<video src="video/Intermission-Walk-in_512kb.mp4" id="video"></video>
+		<div class="load" id="load">
+			<div class="progress" id="progress">
+				
+			</div>
+		</div>
+		<button id="play">播放</button>
+		<script>
+			window.onload = function(){
+				var oPlay = document.getElementById("play")
+				var oLoad = document.getElementById("load")
+				var oProgress = document.getElementById("progress")
+				var oVideo = document.getElementById("video")
+				oVideo.addEventListener("canplay",function(){
+					oPlay.onclick = function(){
+						if(oVideo.paused){
+							oVideo.play()
+						}else {
+							oVideo.pause()
+						}
+					}
+					
+					oVideo.ontimeupdate = function(){
+						var oTime = this.currentTime
+//						console.log(cCurrent)
+						var oTotal = this.duration
+//						console.log(oTotal)
+						var pre = oTime/oTotal
+						oProgress.style.width = pre*200+"px"
+					}
+					
+					oLoad.onclick = function(ev){
+//						console.log((ev.offsetX/this.offsetWidth)*oVideo.duration)
+						oVideo.currentTime = (ev.offsetX/this.offsetWidth)*oVideo.duration
+					}
+					
+					
+				})
+				
+			}
+			
+			
+			
+		</script>
+	</body>
+</html>

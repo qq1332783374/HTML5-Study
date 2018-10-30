@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+	</head>
+	<body>
+		
+		<video src="video/Intermission-Walk-in_512kb.mp4"  id="video">
+			
+		</video>
+		<button id="play">播放</button>
+		
+		<script>
+			window.onload = function(){
+				var oVideo = document.getElementById("video")
+				var oPlay = document.getElementById("play")
+				
+				oVideo.addEventListener("canplay",function(){
+					oPlay.onclick = function(){
+//						oVideo.load()
+						if(oVideo.paused){
+							oVideo.play()
+							this.innerHTML = '暂停'
+						}else{
+							oVideo.pause()
+							this.innerHTML = '播放'
+						}
+					}
+					
+				})
+				
+			}
+			
+		</script>
+		
+</body>
+</html>

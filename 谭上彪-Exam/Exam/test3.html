@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>换肤</title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			body{
+				background: url("https://ss3.bdstatic.com/lPoZeXSm1A5BphGlnYG/skin/882.jpg?2") no-repeat;
+				background-size: cover;
+			}
+			ul li{
+				list-style: none;
+			}
+			a{
+				text-decoration: none;
+			}
+			.nav{
+				width: 845px;
+				margin: 0 auto;
+				border: 1px solid #ddd;
+				box-shadow: 2px 2px 4px #ddd;
+				padding: 5px;
+				overflow: hidden;
+			}
+			.pager li{
+				float: left;
+				font-size: 14px;
+				text-align: center;
+				width: 25px;
+				height: 25px;
+				border-radius: 50%;
+				color: #666;
+				border: 1px solid #ddd;
+				box-shadow: 2px 2px 4px #ddd;
+				margin-left: 5px;
+				line-height: 25px;
+				background: transparent;
+			}
+			
+			.pager li a{
+				color: #666;
+			}
+			.pager li.pager-active{
+				background: #5BC0DE;
+			}
+			.pager li.pager-active a{
+				color: #fff;
+			}
+			.list{
+				margin-top: 15px;
+			}
+			.list li{
+				float: left;
+				width: 260px;
+				height: 160px;
+				border: 1px solid #666;
+				margin-left: 5px;
+				margin-right: 5px;
+				background-image: url("https://ss3.bdstatic.com/lPoZeXSm1A5BphGlnYG/skin_plus/882.jpg?2");
+				padding: 5px;
+				background: #fff;
+			}
+			.list li img{
+				width: 260px;
+				height: 160px;
+				
+			}
+			.clear{
+				clear: both;
+			}
+			.scroll{
+				width: 1000%;
+			}
+		</style>
+		<script src="js/jquery-1.11.0.js"></script>
+	</head>
+	<body>
+		<div class="nav">
+			<ul class="pager">
+				<!--<li></li>-->
+			</ul>
+			<div class="clear"></div>
+			<div class="content">
+				<div class="scroll">
+					<ul class="list">
+						<!--<li>
+							<a href="javascript:;">
+								<img src=""/>
+							</a>
+						</li>-->
+					</ul>
+					<div class="clear"></div>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			$(function(){
+				//设置分页
+				var start = 0 ;
+				var size = 3 ;
+				var cont = 0 ;
+				$.ajax({
+					type:"get",
+					url:"data/Imgs.json",
+					async:true,
+					success:function(res){
+//						console.log(res)
+						var str = '';
+						var pageBtn = '';
+						var sum = Math.ceil(res.length/3);
+						//上下按钮
+						var prev = '<li class="prev"><a href="javascript:;"><</a></li>';
+						var next = '<li class="next"><a href="javascript:;">></a></li>';
+						//生成分页按钮
+						for (var i=0;i<sum;i++) {
+							pageBtn+='<li><a href="javascript:;">'+(i+1)+'</a></li>';
+						}
+						$(".pager").append(pageBtn);
+						$(".pager li:first").before(prev);
+						$(".pager li:last-child").after(next);
+						$(".pager li").eq(1).addClass("pager-active").siblings().removeClass("pager-active");
+						//生成小图
+						for (var i=0;i<res.length;i++) {
+							str+='<li><a href="javascript:;"><img src="'+res[i].sImg+'"/></a></li>'
+						}
+						$(".list").html(str)
+						$.each(res, function(i) {
+							$(".list li").eq(i).attr("data-bImg",res[i].bImg)
+						});
+						localStorage.setItem("LiW",$(".list li").width())
+					}
+				});
+				//下一张
+				$(document).on("click",".next",function(){
+					cont++;
+					if(cont>$(".pager li:not(:first):not(:last)").length-1){
+						cont = 0 ;
+					}
+					localStorage.setItem("cont",cont)
+					$(".pager li:not(:first):not(:last)").eq(cont).addClass("pager-active").siblings().removeClass("pager-active");
+					var w = $(".list li").width();
+					$(".scroll").stop().animate({
+						marginLeft:-(cont*(w*3))
+					})
+				})
+				//上一张
+				$(document).on("click",".prev",function(){
+					cont--;
+					if(cont<0){
+						cont = $(".pager li:not(:first):not(:last)").length-1;
+					}
+					$(".pager li:not(:first):not(:last)").eq(cont).addClass("pager-active").siblings().removeClass("pager-active");
+					var w = $(".list li").width();
+					$(".scroll").stop().animate({
+						marginLeft:-(cont*(w*3))
+					})
+				})
+				//点击当前页
+				$(document).on("click",".pager li:not(:first):not(:last)",function(){
+					cont = $(this).index()-1
+					if(cont<0){
+						cont = $(".pager li").length-1 ;
+					}
+					$(".pager li:not(:first):not(:last)").eq(cont).addClass("pager-active").siblings().removeClass("pager-active");
+					var w = $(".list li").width();
+					$(".scroll").stop().animate({
+						marginLeft:-(cont*(w*3))
+					})
+				})
+				//加载本地皮肤
+				var gBg = localStorage.getItem("bg")||"";
+				if(gBg.length>0){
+					$("body").css("background-image","url("+gBg+")")
+				}
+				//点击换肤
+				$(document).on("click",".list li",function(){
+					var bImg = $(this).data("bimg")
+					$("body").css("background-image","url("+bImg+")")
+					localStorage.setItem("bg",bImg)
+				})
+				
+				
+				
+			})
+		</script>
+	</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<title>Boostrap+H5拖拽购物车</title>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		ul li{
+			list-style: none;
+		}
+		.content{
+			width: 520px;
+			margin: 20px auto;
+			text-align: center;
+		}
+		#list li{
+			width: 120px;
+			float: left;
+			border: 1px solid #ddd;
+			box-shadow: 2px 2px 4px #ddd;
+			margin-right: 5px;
+		}
+		#list li img{
+			width: 100%;
+		}
+		.clear{
+			clear: both;
+		}
+		.shopcar table{
+			border-collapse: collapse;
+		}
+		
+	</style>
+</head>
+<body>
+	<div class="content">
+		<h1 class="text-primary">Boostrap+H5拖拽购物车</h1>
+		<ul id="list">
+			<li draggable="true">
+				<img src="img/f1.jpg"/>
+				<p class="title">美丽的鲜花1</p>
+				<p class="price">52￥</p>
+			</li>
+			<li draggable="true">
+				<img src="img/f2.jpg"/>
+				<p class="title">美丽的鲜花2</p>
+				<p class="price">130￥</p>
+			</li>
+			<li draggable="true">
+				<img src="img/f3.jpg"/>
+				<p class="title">美丽的鲜花3</p>
+				<p class="price">140￥</p>
+			</li>
+			<li draggable="true">
+				<img src="img/f4.jpg"/>
+				<p class="title">美丽的鲜花4</p>
+				<p class="price">99￥</p>
+			</li>
+		</ul>
+		<div class="clear"></div>
+		<div class="shopcar" id="shopcar">
+			<h3 class="text-warning">购物车</h3>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th class="text-center">商品数量</th>
+						<th class="text-center">商品名称</th>
+						<th class="text-center">商品价格</th>
+						<th class="text-center">操作</th>
+					</tr>
+				</thead>
+				<tbody id="context">
+					<!--<tr>
+						<td class="td_shopNum">1</td>
+						<td class="td_shopTitle">美丽的鲜花1</td>
+						<td class="td_shopPrice">52</td>
+						<td>
+							<button type="button" class="btn btn-danger btn-xs" id="btn">删除</button>
+						</td>
+					</tr>-->
+				</tbody>
+				<tfoot>
+					<tr>
+						<td colspan="3">总结：<em id="allMoney">0</em>￥</td>
+						<td>
+							<button class="btn btn-success btn-xs">结算</button>
+						</td>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+	</div>
+	<script type="text/javascript">
+		window.onload = function(){
+			/*
+			 1.开始拖动li  用到的事件ondragstart 设置数据 setData() 获取li的文本
+			 2.ondragover 阻止默认事件
+			 3.在目标元素释放li是的事件 ondrop
+			 释放后要getData（）获取上面设置的数据进行字符串拼接 追加到tbody 
+			 计算总的商品数量和价格
+			 继续添加同种商品 ........没思路
+			 按钮功能还在完善中
+			 * */
+			var oList = document.getElementById("list");
+			var allLis = document.getElementsByTagName("li");
+			var oShopcar = document.getElementById("shopcar");
+			var oAllMoney = document.getElementById("allMoney");
+			var oAllShopNum = document.getElementById("shopNum");
+			var oContext = document.getElementById("context");
+			var obj = {}
+			var Allprice = 0 ;
+			var AllNum = 0 ;
+			var num = 0 ;
+			//1.拖拽开始
+			for (var i=0;i<allLis.length;i++) {
+				allLis[i].ondragstart = function(e){
+					//获取 p 标签的文本
+					var oP = this.getElementsByTagName("p");  //获取当前 li 的 p 标签
+					//设置数据
+					e.dataTransfer.setData('title',oP[0].innerHTML);  //当前的标题
+                    e.dataTransfer.setData('price',oP[1].innerHTML);  //当前的价格
+				}
+			}
+			//2.阻止默认事件
+			oShopcar.ondragover = function(e){
+				e.preventDefault();
+			}
+			//3.释放元素
+			oShopcar.ondrop = function(e){
+				e.preventDefault();
+				//获取设置的数据
+				var title = e.dataTransfer.getData("title");
+				var price = e.dataTransfer.getData("price");
+//				console.log(obj)
+				if(!obj[title]){  //如果设置的title不相等就继续追加
+					num++
+					var oTr = document.createElement("tr");
+					var oContent = '<td class="td_shopNum">'+num+'</td><td class="td_shopTitle">'+title+'</td><td class="td_shopPrice">'+price+'</td><td><button type="button" class="btn btn-danger btn-xs" id="btn">删除</button></td>'
+					oTr.innerHTML = oContent;
+					oContext.appendChild(oTr)
+					obj[title] = 1 ;
+					num =0 ;
+				}else{  //否则就累加
+					var oTd_shopNum = document.getElementsByClassName("td_shopNum");
+					var oTd_shopTitle = document.getElementsByClassName("td_shopTitle");
+					for (var i=0;i<oTd_shopTitle.length;i++) {
+						if(oTd_shopTitle[i].innerHTML == title){
+							oTd_shopNum[i].innerHTML = parseInt(oTd_shopNum[i].innerHTML)+1;
+						}
+					}
+				}
+				//商品总价
+				Allprice += parseInt(price)
+				oAllMoney.innerHTML = Allprice 
+				
+				
+			}
+			
+		}
+	</script>
+</body>
+</html>

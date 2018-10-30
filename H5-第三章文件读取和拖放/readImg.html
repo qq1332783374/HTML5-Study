@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>拖拽预览单张图片</title>
+		<style type="text/css">
+			*{
+				margin: 0;
+			}
+			ul li{
+				list-style: none;
+			}
+			.drag{
+				width: 200px;
+				height: 200px;
+				border: 1px solid #666;
+				text-align: center;
+				line-height: 200px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="drag">
+			文件放这里
+		</div>
+		<ul id="view">
+			
+		</ul>
+		<script type="text/javascript">
+			var oDrag = document.getElementsByTagName("div")[0];
+			var oView = document.getElementById("view");
+			var obj = {};
+			//1. 文件进入
+			oDrag.ondragenter = function(){
+				this.innerHTML = "可以释放了"
+			}
+			//2. 在元素上面
+			oDrag.ondragover = function(e){
+				//阻止默认事件
+				e.preventDefault();
+			}
+			//2. 释放文件
+			oDrag.ondrop = function(e){
+				e.preventDefault();
+				var fs = e.dataTransfer.files;   //获取文件
+				var reader = new FileReader();
+				reader.readAsDataURL(fs[0]);
+				reader.onload = function(){
+					if(!obj[this.result]){
+						//创建标签
+						var oLi = document.createElement("li");
+						var oImg = document.createElement("img");
+						oImg.src = this.result;
+						oLi.appendChild(oImg);
+						oView.appendChild(oLi);
+						obj[this.result] = this.result
+					}else{
+						alert("不要重复提交")
+					}
+				}
+			}
+		</script>
+	</body>
+</html>

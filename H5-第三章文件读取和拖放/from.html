@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>From</title>
+		<style>
+			*{
+				margin: 0;
+			}
+			.contaions{
+				width: 520px;
+				margin: 20px auto;
+			}
+			.form-group{
+				overflow: hidden;
+			}
+			.username{
+				padding: 6px 12px;
+				width: 50%;
+				margin-right: 15px;								
+			}
+			.tips{
+				display: inline-block;
+				padding: 6px 12px;
+				position: relative;
+				border: 1px solid #ddd;
+				background: #1E9FFF;
+				color: #fff;
+				bottom: -35px;
+				font-size: 14px;
+			}
+			.tips span{
+				display: inline-block;
+				width: 0;
+				height: 0;
+				border-bottom: 5px solid transparent;
+				border-top: 5px solid transparent;
+				border-right: 10px solid #1E9FFF;
+				position: absolute;
+				left: -10px;
+				top: 40%;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="contaions">
+			<form>
+				<div class="form-group">
+					<label>用户名：</label>
+					<input type="text" class="username" placeholder="这里是输入的提示语"/>
+					<div class="tips">
+						<span></span><i>请输入用户信息</i>
+					</div>
+				</div>
+				<input type="button" name="btn" id="btn" value="提交"/>
+			</form>
+		</div>
+		<script type="text/javascript" src="js/jquery-1.11.0.js" ></script>
+		<script type="text/javascript" src="H5-3/js/qTip.js" ></script>
+		<script type="text/javascript">
+			var _h = $(".form-group").height()		
+			$(".username").stop().blur(function(){
+				$(".tips").animate({
+					bottom:-_h
+				})
+			})
+			$("#btn").click(function(){
+				if($(".username").val().length==0){
+					$(".tips").stop().animate({
+						bottom:0
+					})
+				}
+				
+			})
+		</script>
+	</body>
+</html>
